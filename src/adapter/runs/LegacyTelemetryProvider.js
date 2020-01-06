@@ -132,8 +132,9 @@ define([
     LegacyTelemetryProvider.prototype.subscribe = function (domainObject, callback, request) {
         var metadata = this.telemetryApi.getMetadata(domainObject);
         var oldObject = this.instantiate(utils.toOldFormat(domainObject), utils.makeKeyString(domainObject.identifier));
+        console.log(oldObject)
         var capability = oldObject.getCapability("telemetry");
-
+        console.log(`capability: ${capability}`)
         function callbackWrapper(series) {
             callback(createDatum(domainObject, metadata, series, series.getPointCount() - 1));
         }
