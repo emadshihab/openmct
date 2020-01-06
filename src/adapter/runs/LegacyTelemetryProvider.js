@@ -41,6 +41,7 @@ define([
      * @see module:openmct.TelemetryAPI~TelemetryProvider#canProvideTelemetry
      */
     LegacyTelemetryProvider.prototype.canProvideTelemetry = function (domainObject) {
+        console.log("can provide")
         return this.instantiate(utils.toOldFormat(domainObject),
             utils.makeKeyString(domainObject.identifier)).hasCapability("telemetry");
     };
@@ -50,6 +51,7 @@ define([
         LegacyTelemetryProvider.prototype.canProvideTelemetry;
 
     function createDatum(domainObject, metadata, legacySeries, i) {
+        console.log("createdatum")
         var datum;
 
         if (legacySeries.getDatum) {
@@ -106,7 +108,9 @@ define([
     LegacyTelemetryProvider.prototype.request = function (domainObject, request) {
         var metadata = this.telemetryApi.getMetadata(domainObject);
         var oldObject = this.instantiate(utils.toOldFormat(domainObject), utils.makeKeyString(domainObject.identifier));
+        console.log(oldObject)
         var capability = oldObject.getCapability("telemetry");
+        console.log(`capability: ${capability}`)
 
         return capability.requestData(request).then(function (telemetrySeries) {
             return Promise.resolve(adaptSeries(domainObject, metadata, telemetrySeries));
